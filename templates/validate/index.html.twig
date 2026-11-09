@@ -34,14 +34,15 @@
                             <td>{{ event.places }}</td>
                             <td><span class="badge badge-pending">Non validé</span></td>
                             <td>
-                                <form method="post" action="{{ path('app_validate_event', {id: event.id}) }}">
-                                    <button type="submit" class="btn btn-small btn-success">Valider</button>
-                                </form>
-                                {# Évaluation 2 – bouton « Refuser » à rendre fonctionnel :
-                                <form method="post">
-                                    <button type="submit" class="btn btn-small btn-danger">Refuser</button>
-                                </form>
-                                #}
+                                <div style="display: flex; gap: 5px;">
+                                    <form method="post" action="{{ path('app_validate_event', {id: event.id}) }}">
+                                        <button type="submit" class="btn btn-small btn-success">Valider</button>
+                                    </form>
+                                    
+                                    <form method="post" action="{{ path('app_event_refuse', {id: event.id}) }}">
+                                        <button type="submit" class="btn btn-small btn-danger">Refuser</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}

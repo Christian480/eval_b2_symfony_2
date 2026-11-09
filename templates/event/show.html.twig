@@ -18,9 +18,11 @@
                 <span class="badge">{{ event.categoryLabel }}</span>
                 <h1>{{ event.title }}</h1>
                 <p>{{ event.date|date('d/m/Y · H\\hi') }}</p>
-                {# Évaluation 2 – bouton visible seulement par l'auteur de l'événement ou un admin :
-                <a class="btn btn-small" href="#">Modifier</a>
-                #}
+                
+                {# Point 7 – Bouton modifier visible seulement par l'auteur ou un admin #}
+                {% if app.user and (event.author == app.user or is_granted('ROLE_ADMIN')) %}
+                    <a class="btn btn-small" href="{{ path('app_event_edit', {id: event.id}) }}">Modifier</a>
+                {% endif %}
             </div>
         </header>
 
@@ -36,7 +38,8 @@
                 {% else %}
                     <p class="places"><span class="badge badge-full">Complet</span></p>
                 {% endif %}
-                <div class="progress"><span style="width: {{ event.participants|length * 100 / event.places }}%"></span></div>
+                
+                <div class="progress"><span style="width: {{ (event.participants|length * 100) / event.places }}%"></span></div>
 
                 {% if not app.user %}
                     <a class="btn btn-block" href="{{ path('app_login') }}">Connectez-vous pour vous inscrire</a>
